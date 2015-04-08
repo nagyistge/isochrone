@@ -1,0 +1,29 @@
+<project name="Isochrone" default="prepare-submission" basedir=".">
+  <property name="sources" location="${basedir}/src/main/java/ch/epfl/isochrone" />
+  <property name="tests" location="${basedir}/src/test/java/ch/epfl/isochrone" />
+  <property name="build" location="${basedir}/target/classes" />
+
+  <path id="default.classpath">
+      <pathelement path="${build}" />
+  </path>
+
+  <target name="clean">
+    <delete file="isochrone.zip" />
+  </target>
+
+  <target name="prepare-submission" description="Attempts to collect everything required for submission into a zip file.">
+    <delete file="isochrone.zip" />
+    <zip destfile="isochrone.zip">
+      <zipfileset dir="${sources}" includes="**" prefix="src/ch/epfl/isochrone/" />
+      <zipfileset dir="${tests}" includes="**" prefix="test/ch/epfl/isochrone/" />
+    </zip>
+  </target>
+
+  <target name="ttsearch" description="Search timetable">
+      <java classname="ch.epfl.isochrone.TimeTableSearch" fork="false">
+          <classpath refid="default.classpath" />
+          <arg line="Lausanne-Flon 2013-10-01 06:08:00" />
+      </java>
+  </target>
+
+</project>
